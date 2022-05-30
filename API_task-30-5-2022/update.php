@@ -4,7 +4,6 @@ $db = new PDO("mysql:host=localhost;dbname=api", "root", "");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$id=$_GET['id']??null;
  #for sure use post
 if($_SERVER['REQUEST_METHOD']=='POST'){
   $name=$_POST['name'];
@@ -18,7 +17,13 @@ $statement=$db->prepare("UPDATE users SET name=:name,age=:age,address=:address")
  $statement->bindValue(':address',$address);
  $statement->execute();
 
-
+ if($statement){
+  $alert=['done'];
+}else{
+  $alert=['error'];
+}
+echo '</br>';
+echo  json_encode($alert);
   
 echo '
 
